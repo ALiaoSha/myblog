@@ -1,8 +1,8 @@
 ---
 title: Hexo+github搭建个人博客并进行个性化定制
 date: 2017-03-09 13:25:29
-tags: 技术
-category: 技术
+tags: Hexo
+category: IT技术
 ---
 
 # 1. 前言
@@ -16,27 +16,39 @@ hexo是基于node.js的所以你必须在node.js的官网上面下载并安装�
 这个网上很多明确的教程，推荐看一看[廖雪峰的git教程](http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000)
 依次注册github账号，添加SSH-key, 设置用户名和邮箱，把秘钥添加到github里面就ok。
 最后验证你的绑定是否成功：
-<img src="/images/ssh_vrif.png" width=100% height=100% align=center />
-## 安装hexo
+![veri_ssh](Hexo-github搭建个人博客并进行个性化定制/ssh_vrif.PNG)
+## github上新建一个博客repo
+在github上建立你的github page（相当于你要建立的个人博客）需要在你的github里面建立一个存放网站代码的repo，这个repo命名方式有规定。必须以你的github用户名+github.io的形式命名。比如：你的github用户名为abc,那么你的github page repo 要命名为abc.github.io
+##  安装hexo
 很简单只要一个命令
 ```
-npm install hexo-cli -g
+$ npm install hexo-cli -g
 ```
 hexo就安装成功了。然后就可以搭建你的 网站。
 - 新建一个文件夹，进入文件夹后用命令hexo init初始化。最简洁的是直接指定初始化的目录，hexo会自动生成它。然后cd进去。
 ```
-hexo init myblog
-cd myblog
+$ hexo init myblog
+$ cd myblog
 ```
 - 安装依赖和插件
 ```
-npm install
+$ npm install
 ```
-- hexo
+
 # 3. 开始搭建一个基本的框架
-做好准备工作以后就要开始利用
+做好准备工作以后就要开始利用hexo生成你的博客了。  
+`$ hexo g`命令帮助你生成静态页面到`myblog\public\`目录。  
+`$ hexo s`命令启动本地服务，在浏览器打开  `localhost:4000`可以本地预览生成的博客网页。
 # 4. 定制你的博客界面
-![](themes/jsimple/source/images/favicon.PNG)
+在`https://hexo.io/themes/`上找到你喜欢的主题，点进预览界面以后找到该主题所在的github repo（我用的是[yscoder](https://github.com/yscoder/hexo-theme-indigo)的`indigo`主题）。然后到`mybolg\themes`目录下把这个repo 克隆下来 。接下来我们开始对主题文件进行自定义配置。
+##　1. 配置全局_config.yml
+全局_config.yml在myblog根目录下面。主要设置的就是`theme`和`deploy`选项。`theme`要设置为你刚才克隆的主题。deploy选项如下设置。repo后面填的是你的github page的地址。
+
+![deploy_setting](Hexo-github搭建个人博客并进行个性化定制/deploy_setting.PNG)
+##　2. 配置主题_config.yml
+主题config里面的选项都很直白，相应的修改成你自己的就行。注意，设置头像或者其他图片文件的时候，图片放在`themes\indigo\source\img\`下。在设置的时候图片文件名大小写一定要对上。我就是因为把png图片的后缀没有写成`.PNG`查了好久都没查出来是什么问题。
+
+更详细的设置可以参考[不如](http://ibruce.info/2013/11/22/hexo-your-blog/)的博客。
 # 5. 解决数学公式的支持问题
 由于我用的jSimple主题没有启用mathjax的配置，所以我采用的是安装hexo-math插件的方法,帮助我们渲染latex公式。
 安装（注意命令一定要加--save）：
@@ -72,12 +84,9 @@ plugins:
 [使用 Hexo 搭建博客的深度优化与定制](http://blog.tangxiaozhu.com/p/45374067/)  
 [在 Jacman使用 Mathjax 输出数学式](http://wangcaiyong.com/2015/06/25/mathjax/)
 
-
-
-## ----------------------------
-还有一大堆问题没有解决：
-- 字体配置问题
-- 图片插入问题
-- archives和about界面问题
-- 部署以后的时候头像问题
-- 插入的代码的时候显示代码block很丑陋
+[comment]:还有一大堆问题没有解决：
+[comment]:  字体配置问题
+[comment]:  图片插入问题
+[comment]:  archives和about界面问题
+[comment]:  部署以后的时候头像问题
+[comment]:  插入的代码的时候显示代码block很丑陋>

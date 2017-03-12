@@ -1,7 +1,8 @@
 ---
 title: 多电脑管理更新我的github个人博客
 date: 2017-03-12 10:08:29
-tags: 技术
+tags: Hexo
+category: IT技术
 ---
 
 昨天跟着[Mungo](http://mungo.space/2015/10/14/create-hexo-on-github-4/)的博文实现多电脑终端管理我的github pages博客的时候，边做边记录下来了我遇到的一些问题和解决方案。结果在atom上写的时候忘记save了。直接关掉了atom发现刚刚写的markdown文档大小为0kb。我苍了个天！
@@ -74,40 +75,49 @@ $ npm install hexo-math --save           # mathjax渲染依赖包
 
 5.安装主题，我在上文中提到新安装的主题并不能被上传，所以也需要重新手动安装(以NexT主题为例)
 
+```
 $ git clone https://github.com/iissnan/hexo-theme-next themes/next
+```
 这里要注意的是： themes/next 是主题保存目录。
-
+我是用`$ git submodules add <address>`命令安装的主题，本来以后这样就可以把主题代码也push到myblog下面。后来发现push上去的git submodule是重定向到主题作者的repo的。
 6.我们之前备份的两个配置文件hexo_config.yml和theme_config.yml有用了,hexo_config.yml重命名为_config.yml覆盖根目录下的同名文件，而theme_config.yml也重命名为_config.yml覆盖主题目录下的config.yml文件。注意文件名前面的下划线’_’。
 
-7.输入命令$ hexo generate和命令$ hexo server，然后在浏览器输入localhost:4000中进行预览。如果没有问题那么我们在B电脑上就配置成功了。
+7.输入命令`$ hexo g`和命令`$ hexo s`，然后在浏览器输入`localhost:4000`中进行预览。如果没有问题那么我们在B电脑上就配置成功了。
 
-在B电脑上更新博客
-现在在B电脑上也可以像在A电脑上一样更新博客了，同样是$ hexo new post "my_new_post"
-编辑完文章，然后执行$ hexo generate和$ hexo deploy就可以成功发表了。
-这里$ hexo deploy命令是将我们的博客文章发表到我们的Github上的Hexo博客，并不是前文新建的blog仓库，新建的blog仓库用来保存我们的Hexo程序。
+# 在B电脑上更新博客
+现在在B电脑上也可以像在A电脑上一样更新博客了，同样是
+```$ hexo new post "my_new_post"```
+编辑完文章，然后执行`$ hexo generate`和`$ hexo deploy`就可以成功发表了。
+这里`$ hexo deploy`命令是将我们的博客文章发表到我们的Github上的Hexo博客，并不是前文新建的blog仓库，新建的blog仓库用来保存我们的Hexo程序。
 
 把B电脑上的Hexo从本地同步到Github仓库
 当发表完文章，我们还需要把Hexo程序同步到我们Github的blog仓库。执行下面指令：
 
+```
 $ git add .
-这时候可以输入命令$ git status查看状态，回显示刚才编辑过的文件的信息。
-
-之后分别输入下面指令完成上传：
-
 $ git commit -m "commit from PC_B"
 $ git push -u origin master
-成功后，我们再次把程序同步更新到了我们的Github仓库blog。
-如果再想用A电脑更新我们的博客，只需要在执行添加文章之前先把程序从blog仓库拉取下来便可。输入命令：
 ```
-$ git pull https://github.com/Gitzhaoyang/blog.git
+成功后，我们再次把hexo博客源代码同步更新到了我们的Github仓库myblog。
+如果再想用A电脑更新我们的博客，只需要在执行添加文章之前先把程序从myblog仓库拉取下来便可。输入命令：
+```
+$ git pull https://github.com/ALiaoSha/myblog.git
 ```
 即可完成。
 
-注意:
+# 注意:
 我们每次更新博客时，为了保持我们每次用到的程序都是最新的。
 
-每次更新博客之前都需要执行$ git pull https://github.com/xxxx/xxx.git保持本地最新；
+每次更新博客之前都需要执行
+```
+$ git pull https://github.com/xxxx/xxx.git保持本地最新；
+```
+每次更新博客之后都需要执行
+```
+$ git add .
+$ git commit -m "message"
+$ git push -u origin master
+```
+以保持Github仓库程序最新。
 
-每次更新博客之后都需要执行$ git add .,$ git commit -m "message",$ git push -u origin master以保持Github仓库程序最新。
-
-好了，现在我们就能实现在不同电脑都能对我们的Hexo博客进行维护了。
+这样，我们就实现了在不同电脑都能对我们的Hexo博客进行维护了。
